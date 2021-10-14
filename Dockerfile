@@ -11,7 +11,7 @@ WORKDIR /app
 COPY . .
 
 # CGO_ENABLED禁用cgo 然后指定OS等，并go build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go mod tidy && go build -o main main.go
 
 
 ###############################################################################
