@@ -6,4 +6,6 @@ import (
 
 func init() {
 
+	bootTime()
+	loadEnv()
 }

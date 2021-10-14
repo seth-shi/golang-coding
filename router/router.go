@@ -9,6 +9,6 @@ import (
 func init() {
 	s := g.Server()
 	s.Group("/", func(group *ghttp.RouterGroup) {
-		group.ALL("/hello", api.Hello)
+		group.GET("/", api.Hello.Index)
 	})
 }
