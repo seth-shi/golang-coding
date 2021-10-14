@@ -137,6 +137,13 @@ pipeline {
               sudo: true,
             )
 
+            // 删除没用使用的镜像
+            sshCommand(
+              remote: remoteConfig,
+              command: "docker image prune -a -f",
+              sudo: true,
+            )
+
             echo "部署成功，请到 http://${REMOTE_HOST}:8199 预览效果"
           }
         }
