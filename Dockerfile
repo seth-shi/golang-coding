@@ -47,4 +47,4 @@ COPY --from=builder /app/.env     $WORKDIR/.env
 #                                   运行
 ###############################################################################
 WORKDIR $WORKDIR
-CMD ["./main"]
+CMD ./main
