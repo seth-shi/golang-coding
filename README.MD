@@ -5,7 +5,6 @@
 * 使用的[https://github.com/gogf/gf](https://github.com/gogf/gf)开发, 参考它的默认`Dockerfile`并修改了部分(默认的需要在宿主机打包[为了依赖下载缓存], 我修改为全部在镜像中进行)
 
 ```
-### Dockerfile
 ###############################################################################
 #          使用第一个镜像打包
 ###############################################################################
@@ -19,7 +18,8 @@ WORKDIR /app
 COPY . .
 
 # CGO_ENABLED禁用cgo 然后指定OS等，并go build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go mod tidy && go build -o main main.go
+RUN go mod tidy
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
 
 
 ###############################################################################
@@ -55,7 +55,7 @@ COPY --from=builder /app/.env     $WORKDIR/.env
 #                                   运行
 ###############################################################################
 WORKDIR $WORKDIR
-CMD ["./main"]
+CMD ./main
 ```
 
 * `Coding`新建构建计划的时候, 可以选择现有的模板,这里我选择`CODING Docker 镜像推送`
