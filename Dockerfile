@@ -20,15 +20,15 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
 ###############################################################################
 # 极客可以尝试 scratch
 # FROM scratch
-FROM alpine
+FROM scratch
 
 # 使用国内alpine源
-RUN echo http://mirrors.aliyun.com/alpine/v3.8/main/ > /etc/apk/repositories
-
-# 设置系统时区 - +8时区
-RUN apk update && apk add tzdata ca-certificates bash
-RUN rm -rf /etc/localtime && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN echo "Asia/Shanghai" > /etc/timezone
+#RUN echo http://mirrors.aliyun.com/alpine/v3.8/main/ > /etc/apk/repositories
+#
+## 设置系统时区 - +8时区
+#RUN apk update && apk add tzdata ca-certificates bash
+#RUN rm -rf /etc/localtime && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#RUN echo "Asia/Shanghai" > /etc/timezone
 
 
 # 设置固定的项目路径
@@ -46,6 +46,7 @@ COPY --from=builder /app/.env     $WORKDIR/.env
 
 ###############################################################################
 #                                   运行
+# scratch 镜像需要使用 CMD ["./main"] 方式运行
 ###############################################################################
 WORKDIR $WORKDIR
-CMD ./main
+CMD ["./main"]
