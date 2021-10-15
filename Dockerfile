@@ -19,11 +19,14 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
 ###############################################################################
 #          运行镜像: 从构建镜像中复制构建好的文件
 ###############################################################################
+# 使用空镜像 scratch
+# FROM scratch
 FROM alpine
 
+# 如果使用 scratch 镜像, 把 RUN 相关的全部移除掉
+###############################################################################
 # 使用国内 alpine 源
 RUN echo http://mirrors.aliyun.com/alpine/v3.8/main/ > /etc/apk/repositories
-
 # 设置系统时区 - +8时区
 RUN apk update && apk add tzdata ca-certificates bash
 RUN rm -rf /etc/localtime && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
