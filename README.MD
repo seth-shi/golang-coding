@@ -149,7 +149,7 @@ pipeline {
             // 部署成功, 发送通知到 Server酱 例子, 官网的发送通知可以直接用模板
             sshCommand(
               remote: remoteConfig,
-              command: "curl -X POST -d "title=`echo $(curl 127.0.0.1:8199/ping)`&desp=`docker logs --tail 10 golang-coding`" https://sctapi.ftqq.com/xxxx.send",
+              command: "curl -X POST -d \"title=`echo \$(curl 127.0.0.1:8199/ping)`&desp=`docker logs --tail 10 golang-coding`\" https://sctapi.ftqq.com/xxxx.send",
               sudo: true,
             )
 
