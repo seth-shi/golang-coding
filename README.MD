@@ -135,7 +135,7 @@ pipeline {
 
             sshCommand(
               remote: remoteConfig,
-              command: "docker run -d -p 8199:8199 --name golang-coding ${DOCKER_IMAGE_URL}",
+              command: "docker run -d -p 8199:8199 --name golang-coding --restart=always ${DOCKER_IMAGE_URL}",
               sudo: true,
             )
 
