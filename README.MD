@@ -142,7 +142,7 @@ pipeline {
 
             sshCommand(
               remote: remoteConfig,
-              command: "docker run -d -p 8199:8199 --name golang-coding ${DOCKER_IMAGE_URL}",
+              command: "docker run -d -p 8199:8199 --name golang-coding --restart=always ${DOCKER_IMAGE_URL}",
               sudo: true,
             )
 
@@ -150,6 +150,13 @@ pipeline {
             sshCommand(
               remote: remoteConfig,
               command: "docker image prune -a -f",
+              sudo: true,
+            )
+            
+            // 部署成功, 发送通知到 Server酱 例子, 官网的发送通知可以直接用模板
+            sshCommand(
+              remote: remoteConfig,
+              command: "curl -X POST -d \"title=`echo \$(curl 127.0.0.1:8199/ping)`&desp=`docker logs --tail 10 golang-coding`\" https://sctapi.ftqq.com/xxxx.send",
               sudo: true,
             )
 

@@ -9,7 +9,12 @@ var Hello = helloApi{}
 
 type helloApi struct {}
 
-// Index is a demonstration route handler for output "Hello World!".
+
+func (*helloApi) Ping(r *ghttp.Request) {
+	r.Response.Writeln("PONG")
+}
+
+
 func (*helloApi) Index(r *ghttp.Request) {
 	r.Response.Writeln("Hello World! Application Start Time :" + service.BootTime)
 }
