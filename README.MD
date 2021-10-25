@@ -120,17 +120,24 @@ pipeline {
               sudo: true,
             )
 
-            sshCommand(
-              remote: remoteConfig,
-              command: "docker rm -f golang-coding | true",
-              sudo: true,
-            )
-
             // DOCKER_IMAGE_VERSION 中涉及到 GIT_LOCAL_BRANCH / GIT_TAG / GIT_COMMIT 的环境变量的使用
             // 需要在本地完成拼接后，再传入到远端服务器中使用
             DOCKER_IMAGE_URL = sh(
               script: "echo ${CODING_DOCKER_REG_HOST}/${CODING_DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}",
               returnStdout: true
+            )
+
+            // 拉取远程镜像
+            sshCommand(
+              remote: remoteConfig,
+              command: "docker pull ${DOCKER_IMAGE_URL}",
+              sudo: true,
+            )
+
+            sshCommand(
+              remote: remoteConfig,
+              command: "docker rm -f golang-coding | true",
+              sudo: true,
             )
 
             sshCommand(
